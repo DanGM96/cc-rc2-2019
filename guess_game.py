@@ -5,6 +5,7 @@ print("Bem vindo ao jogo de Adivinhação")
 print("********************************\n")
 
 secret_number = random.randrange(1, 100)
+points = 1000
 tries = 0          # Três tentativas
 
 while 1:
@@ -45,4 +46,8 @@ for run in range(tries):
         elif smaller:
             print("Tente um número MAIOR.")
 
+        points -= abs(secret_number - (guess))
+
+print(f"\nPontuação: {points}")
 print("\nFim de jogo.")
+print("Número secreto: ", secret_number)
