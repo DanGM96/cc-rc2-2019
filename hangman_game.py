@@ -22,8 +22,7 @@ def play():
         guess = try_guessing()
 
         if guess in secret_word:
-            score_correct_guess(guess, correct_letters,
-                                secret_word)
+            score_correct_guess(guess, correct_letters, secret_word)
         else:
             mistakes += 1
             draw_hang(mistakes)
@@ -174,22 +173,22 @@ def print_winner_msg():
 def print_loser_msg(secret_word):
     print("\nVocê foi enforcado!")
     print("A palavra era {}".format(secret_word))
-    print("    _______________        ")
-    print("   /               \       ")
-    print("  /                 \      ")
-    print("//                   \/\   ")
-    print("\|   XXXX     XXXX   | /   ")
-    print(" |   XXXX     XXXX   |/    ")
-    print(" |   XXX       XXX   |     ")
-    print(" |                   |     ")
-    print(" \__      XXX      __/     ")
-    print("   |\     XXX     /|       ")
-    print("   | |           | |       ")
-    print("   | I I I I I I I |       ")
-    print("   |  I I I I I I  |       ")
-    print("   \_             _/       ")
-    print("     \_         _/         ")
-    print("       \_______/           ")
+    print("     _______________        ")
+    print("    /               \       ")
+    print("   /                 \      ")
+    print("/\/                   \/\   ")
+    print("\ |   XXXX     XXXX   | /   ")
+    print(" \|   XXXX     XXXX   |/    ")
+    print("  |   XXX       XXX   |     ")
+    print("  |                   |     ")
+    print("  \__      XXX      __/     ")
+    print("    |\     XXX     /|       ")
+    print("    | |           | |       ")
+    print("    | I I I I I I I |       ")
+    print("    |  I I I I I I  |       ")
+    print("    \_             _/       ")
+    print("      \_         _/         ")
+    print("        \_______/           ")
 
 
 if __name__ == "__main__":
