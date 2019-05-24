@@ -1,11 +1,27 @@
 import random
 
-print("\n******************************")
+print("\n********************************")
 print("Bem vindo ao jogo de Adivinhação")
-print("******************************\n")
+print("********************************\n")
 
 secret_number = random.randrange(1, 100)
-tries = 3           # Três tentativas
+tries = 0          # Três tentativas
+
+while 1:
+    print("Defina o nível de dificuldade")
+    level = int(input("(1)Fácil (2)Médio (3)Difícil\n"))
+
+    if level == 1:
+        tries = 20
+        break
+    elif level == 2:
+        tries = 10
+        break
+    elif level == 3:
+        tries = 5
+        break
+    else:
+        continue
 
 for run in range(tries):
     print("\nTentativa {} de {}".format(run + 1, tries))
