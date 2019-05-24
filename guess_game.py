@@ -1,13 +1,15 @@
+import random
+
 print("\n******************************")
 print("Bem vindo ao jogo de Adivinhação")
 print("******************************\n")
 
-secret_number = 42
+secret_number = random.randrange(1, 100)
 tries = 3           # Três tentativas
 
 for run in range(tries):
     print("\nTentativa {} de {}".format(run + 1, tries))
-    guess_str = input("Chute um numero entre 1 e 100:")
+    guess_str = input("Chute um numero entre 1 e 100: ")
     guess = int(guess_str)
 
     correct = guess == secret_number
@@ -19,12 +21,12 @@ for run in range(tries):
         continue
 
     if correct:
-        print("Correto! A resposta pra vida, o universo e tudo mais!")
+        print("Parabéns! Você venceu.")
         break
     else:
         if bigger:
-            print("O número certo é MENOR do que esse. Estou decepcionado com você.")
+            print("Tente um número MENOR.")
         elif smaller:
-            print("O número certo é MAIOR do que esse. Estou decepcionado com você.")
+            print("Tente um número MAIOR.")
 
 print("\nFim de jogo.")
