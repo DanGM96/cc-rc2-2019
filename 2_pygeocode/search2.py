@@ -9,7 +9,17 @@ def geocode(address):
     headers = {'User-Agent': user_agent}
     response = requests.get(base, params=parameters, headers=headers)
     reply = response.json()
-    print(reply[0]['lat'], reply[0]['lon'])
+
+    print('Endereço buscado: ', address)
+    i = 0
+    for r in reply:
+        aux = r['display_name'].split(',')  # lista
+        lat = r['lat']
+        lon = r['lon']
+        print('\tResultado ', i + 1, ': ')
+        print('\t\tCEP: ', aux[len(aux) - 2])
+        print(f'\t\t(Latitude, Longitude): ({lat}, {lon})')
+        i = i + 1
 
 
 if __name__ == '__main__':
