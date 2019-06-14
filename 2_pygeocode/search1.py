@@ -1,7 +1,7 @@
 from geopy.geocoders import Nominatim
 
 if __name__ == '__main__':
-    address = 'Ceará, Ituiutaba, MG'
+    address = 'Belarmino Vilela Junqueira, Ituiutaba, MG'
     user_agent = 'Search1'
     location = Nominatim(user_agent=user_agent).geocode(address, exactly_one=False) # addressLine, locality (city), adminDistrict (state), countryRegion, or postalcode
 
