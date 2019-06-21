@@ -1,68 +1,63 @@
 import socket
-from os import system, name  # import only system from os
-from time import sleep  # import sleep to show output for some time period
 import game
 
 MAX_BYTES = 65535
-p_number = 3  # numero de players
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+p_number = 3  # Numero máximo de players, apenas números positivos!
 p_name = []  # Guarda o player name
 p_address = []  # Guarda o player address
 
 
-# define clear function
-def clear():
-    # for windows
-    if name == 'nt':
-        _ = system('cls')
-
-    # for mac and linux(here, os.name is 'posix')
-    else:
-        _ = system('clear')
-
-
 def server(interface, port):
-    clear()
-
-    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     sock.bind((interface, port))
-    print('Listening at', sock.getsockname())
+    print('\n\nListening at', sock.getsockname())
 
     i = 0
     while True:
+        i += 1
         online_players()
 
-        if p_number - i > 1:
-            print('Aguardando mais jogadores...')
-        elif p_number - i == 1:
-            print('Aguardando um jogador...')
-        else:
-            print('O número de jogadores é inválido, configure seu jogo corretamente!')
-            return
+        if i > p_number:
+            break
 
         data, client_address = sock.recvfrom(MAX_BYTES)
         login = data.decode('ascii')
         if login == '':
-            login = 'P' + str(i + 1)
-        text = ('> {} conectado com sucesso.\n'.format(login))
+            login = 'P' + str(i)
+        text = ('> {} conectado com sucesso.'.format(login))
         sock.sendto(text.encode('ascii'), client_address)
         p_name.append(login)
         p_address.append(client_address)
-        i += 1
         print(text)
 
-        if i == p_number:
-            sleep(1)
-            clear()
-            online_players()
-            print('Sala completa.')
-            break
+    game.play()
 
 
 def online_players():
-    quant = len(p_name)
-    print('Jogadores na sala ({}/{}):'.format(quant, p_number))
-    for i in range(quant):
-        print('\t{}\t{}'.format(p_name[i], p_address[i]))
+    p_online = len(p_name)
+    p_head = '\nJogadores na sala ({}/{}):'.format(p_online, p_number)
+    print(p_head)
+
+    for i in range(p_online):
+        sock.sendto(p_head.encode('ascii'), p_address[i])  # Envia o head com 'info' sobre quantidade de players
+
+    for i in range(p_online):
+        p_body = '\t{}\t{}'.format(p_name[i], p_address[i])
+        print(p_body)
+        for j in range(p_online):
+            sock.sendto(p_body.encode('ascii'), p_address[j])  # Envia o 'body' com info sobre nome e address de players
+
+    if p_number - p_online > 1:
+        waiter = 'Aguardando mais jogadores...'
+    elif p_number - p_online == 1:
+        waiter = 'Aguardando um jogador...'
+    else:
+        waiter = 'Sala completa.'
+
+    print(waiter)
+
+    for i in range(p_online):
+        sock.sendto(waiter.encode('ascii'), p_address[i])  # Envia o 'waiter' com mensagem sobre aguardo
 
 
 if __name__ == '__main__':
