@@ -12,16 +12,19 @@ def client(hostname, port):
     print('Client socket name is {}'.format(sock.getsockname()))
 
    # text = input("login: ")
-    sock.sendto('A1'.encode('ascii'), (hostname, port))
+    sock.sendto(''.encode('ascii'), (hostname, port))
     print('Tentando entrar na sala do jogo...')
     while True:
         data, address = sock.recvfrom(MAX_BYTES)
         if not data:
             break
-        print(data.decode('ascii'))
+        text = data.decode('utf-8')
+        print(text)
 
-    print('The server says {!r}'.format(data.decode('ascii')))
+        if text == '\nDefina o nível de dificuldade\n(1)Fácil\t(2)Médio\t(3)Difícil':
+            text = input('')
+            sock.sendto(text.encode('utf-8'), (hostname, port))
 
 
 if __name__ == '__main__':
-    client('192.168.1.8', 1337)
+    client('192.168.52.6', 1337)
